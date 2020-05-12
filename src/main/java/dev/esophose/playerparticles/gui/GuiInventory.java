@@ -66,7 +66,7 @@ public abstract class GuiInventory {
         }
     }
     
-    protected static final int INVENTORY_SIZE = 54;
+    public int INVENTORY_SIZE = 54;
     protected PPlayer pplayer;
     protected Inventory inventory;
     protected List<GuiActionButton> actionButtons;
@@ -94,7 +94,20 @@ public abstract class GuiInventory {
     public Inventory getInventory() {
         return this.inventory;
     }
-    
+
+    /**
+     * Fills the whole inventory with a color
+     *
+     * @param borderColor The fill color
+     */
+    protected void fillColor(BorderColor borderColor, int slots) {
+        ItemStack itemStack = borderColor.getIcon();
+
+        // Top
+        for (int i = 0; i < slots; i++)
+            this.inventory.setItem(i, itemStack);
+    }
+
     /**
      * Fills the border of the inventory with a given color
      * 
@@ -103,21 +116,52 @@ public abstract class GuiInventory {
     protected void fillBorder(BorderColor borderColor) {
         ItemStack itemStack = borderColor.getIcon();
         
-        // Top
-        for (int i = 0; i < 9; i++)
-            this.inventory.setItem(i, itemStack);
-        
+      // Top
+            for (int i = 0; i < 9; i++)
+                this.inventory.setItem(i, itemStack);
+
         // Bottom
         for (int i = INVENTORY_SIZE - 9; i < INVENTORY_SIZE; i++)
             this.inventory.setItem(i, itemStack);
-        
+
         // Left
         for (int i = 0; i < INVENTORY_SIZE; i += 9)
             this.inventory.setItem(i, itemStack);
-        
+
         // Right
         for (int i = 8; i < INVENTORY_SIZE; i += 9)
             this.inventory.setItem(i, itemStack);
+    }
+
+    /**
+     * Fills the border of the inventory with two given colors
+     *
+     * @param colorOne The first color of the border
+     * @param colorTwo The second color of the border
+     */
+    protected void fillBorderAlternating(BorderColor colorOne, BorderColor colorTwo) {
+        ItemStack one = colorOne.getIcon();
+        ItemStack two = colorTwo.getIcon();
+
+        // Top
+        for (int i = 0; i < 9; i++)
+            if (i % 2 == 0) this.inventory.setItem(i, one);
+            else this.inventory.setItem(i, two);
+
+        // Bottom
+        for (int i = INVENTORY_SIZE - 9; i < INVENTORY_SIZE; i++)
+            if (i % 2 == 0) this.inventory.setItem(i, one);
+            else this.inventory.setItem(i, two);
+
+        // Left
+        for (int i = 0; i < INVENTORY_SIZE; i += 9)
+            if (i % 2 == 0) this.inventory.setItem(i, one);
+            else this.inventory.setItem(i, two);
+
+        // Right
+        for (int i = 8; i < INVENTORY_SIZE; i += 9)
+            if (i % 2 == 0) this.inventory.setItem(i, one);
+            else this.inventory.setItem(i, two);
     }
     
     /**
@@ -157,11 +201,7 @@ public abstract class GuiInventory {
                 button.handleClick(isShiftClick);
                 if (Setting.GUI_BUTTON_SOUND.getBoolean() && event.getWhoClicked() instanceof Player) {
                     Player player = (Player) event.getWhoClicked();
-                    if (NMSUtil.getVersionNumber() > 8) {
-                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1);
-                    } else {
-                        player.playSound(player.getLocation(), Sound.valueOf("CLICK"), 0.5f, 1);
-                    }
+                    player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 0.6f, 0.6f);
                 }
                 break;
             }

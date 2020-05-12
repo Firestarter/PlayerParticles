@@ -24,7 +24,7 @@ import org.bukkit.Bukkit;
 public class GuiInventoryManageGroups extends GuiInventory {
 
     public GuiInventoryManageGroups(PPlayer pplayer) {
-        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), INVENTORY_SIZE, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-manage-your-groups")));
+        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), 54, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-manage-your-groups")));
 
         LocaleManager localeManager = PlayerParticles.getInstance().getManager(LocaleManager.class);
         GuiManager guiManager = PlayerParticles.getInstance().getManager(GuiManager.class);

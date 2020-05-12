@@ -1,9 +1,12 @@
-/.gradle/
-/.settings/
+.classpath
+.project
+/target
 .idea/
-build/
-target/
+.settings
+/libs/
 *.iml
+.vscode/
 /bin/
 /docs/
 /images/
+dependency-reduced-pom.xml

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,6 +23,7 @@ public class GuiActionButton {
     private String[] lore;
     private GuiActionButtonClickCallback onClick;
     private int iconIndex;
+    private boolean enchanted;
     
     /**
      * Constructor for creating animated icons
@@ -118,12 +120,17 @@ public class GuiActionButton {
         if (itemMeta != null) {
             itemMeta.setDisplayName(PlaceholderAPIHook.applyPlaceholders(pplayer.getPlayer(), this.name));
             itemMeta.setLore(parseLore(pplayer, this.lore));
+            if (enchanted) itemMeta.addEnchant(Enchantment.MENDING, 1, true);
             if (NMSUtil.getVersionNumber() > 7)
-                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_POTION_EFFECTS);
+                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ENCHANTS);
             itemStack.setItemMeta(itemMeta);
         }
         
         return itemStack;
+    }
+
+    public void addEnchant() {
+        enchanted = true;
     }
     
     /**

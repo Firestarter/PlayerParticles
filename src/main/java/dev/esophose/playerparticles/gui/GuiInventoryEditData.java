@@ -141,7 +141,7 @@ public class GuiInventoryEditData extends GuiInventory {
     }
 
     public GuiInventoryEditData(PPlayer pplayer, ParticlePair editingParticle, int pageNumber, List<Runnable> callbackList, int callbackListPosition) {
-        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), INVENTORY_SIZE, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-select-data")));
+        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), 54, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-select-data")));
 
         LocaleManager localeManager = PlayerParticles.getInstance().getManager(LocaleManager.class);
 

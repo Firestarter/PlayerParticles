@@ -17,7 +17,7 @@ import org.bukkit.Bukkit;
 public class GuiInventoryEditParticle extends GuiInventory {
 
     public GuiInventoryEditParticle(PPlayer pplayer, ParticlePair editingParticle) {
-        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), INVENTORY_SIZE, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-editing-particle", StringPlaceholders.single("id", editingParticle.getId()))));
+        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), 54, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-editing-particle", StringPlaceholders.single("id", editingParticle.getId()))));
 
         LocaleManager localeManager = PlayerParticles.getInstance().getManager(LocaleManager.class);
         GuiManager guiManager = PlayerParticles.getInstance().getManager(GuiManager.class);

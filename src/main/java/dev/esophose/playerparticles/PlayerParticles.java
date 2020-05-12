@@ -27,7 +27,6 @@ import dev.esophose.playerparticles.util.LegacyMetrics;
 import dev.esophose.playerparticles.util.NMSUtil;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -69,14 +68,6 @@ public class PlayerParticles extends JavaPlugin {
         pm.registerEvents(new PPlayerMovementListener(), this);
         pm.registerEvents(new PPlayerCombatListener(), this);
         pm.registerEvents(new PlayerChatHook(), this);
-
-        if (Setting.SEND_METRICS.getBoolean()) {
-            if (NMSUtil.getVersionNumber() > 7) {
-                new MetricsLite(this, 3531);
-            } else {
-                new LegacyMetrics(this);
-            }
-        }
 
         if (PlaceholderAPIHook.enabled())
             new ParticlePlaceholderExpansion(this).register();

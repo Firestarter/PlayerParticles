@@ -21,7 +21,7 @@ import org.bukkit.Bukkit;
 public class GuiInventoryLoadPresetGroups extends GuiInventory {
 
     public GuiInventoryLoadPresetGroups(PPlayer pplayer, boolean isEndPoint) {
-        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), INVENTORY_SIZE, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-load-a-preset-group")));
+        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), 54, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-load-a-preset-group")));
 
         LocaleManager localeManager = PlayerParticles.getInstance().getManager(LocaleManager.class);
         GuiManager guiManager = PlayerParticles.getInstance().getManager(GuiManager.class);

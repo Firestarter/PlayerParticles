@@ -15,17 +15,21 @@ import dev.esophose.playerparticles.util.StringPlaceholders;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 public class GuiInventoryManageParticles extends GuiInventory {
 
     public GuiInventoryManageParticles(PPlayer pplayer) {
-        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), INVENTORY_SIZE, PlayerParticles.getInstance().getManager(LocaleManager.class).getLocaleMessage("gui-manage-your-particles")));
+        super(pplayer, Bukkit.createInventory(pplayer.getPlayer(), 54, "Manage Particles"));
 
         LocaleManager localeManager = PlayerParticles.getInstance().getManager(LocaleManager.class);
         GuiManager guiManager = PlayerParticles.getInstance().getManager(GuiManager.class);
 
-        this.fillBorder(BorderColor.ORANGE);
+        this.fillBorderAlternating(BorderColor.ORANGE, BorderColor.RED);
 
         // Manage/Delete Particle Buttons
         List<ParticlePair> particles = new ArrayList<>(pplayer.getActiveParticles());
@@ -35,19 +39,14 @@ public class GuiInventoryManageParticles extends GuiInventory {
         int nextWrap = 17;
         int maxIndex = 35;
         for (ParticlePair particle : particles) {
-            StringPlaceholders stringPlaceholders = StringPlaceholders.builder("id", particle.getId())
-                    .addPlaceholder("effect", ParticleUtils.formatName(particle.getEffect().getName()))
-                    .addPlaceholder("style", ParticleUtils.formatName(particle.getStyle().getName()))
-                    .addPlaceholder("data", particle.getDataString())
-                    .build();
             GuiActionButton selectButton = new GuiActionButton(
                     index,
-                    GuiIcon.PARTICLES.get(),
-                    localeManager.getLocaleMessage("gui-color-icon-name") + localeManager.getLocaleMessage("gui-particle-name", StringPlaceholders.single("id", particle.getId())),
-                    new String[]{
-                            localeManager.getLocaleMessage("gui-color-subtext") + localeManager.getLocaleMessage("gui-click-to-edit-particle"),
-                            localeManager.getLocaleMessage("gui-color-info") + localeManager.getLocaleMessage("gui-particle-info", stringPlaceholders),
-                            localeManager.getLocaleMessage("gui-color-unavailable") + localeManager.getLocaleMessage("gui-shift-click-to-delete")
+                    Material.NETHER_STAR,
+                    ChatColor.translateAlternateColorCodes('&', String.format("&f&lParticle %s", particle.getId())),
+                    new String[] {
+                            ChatColor.GRAY + "Effect: " + ChatColor.LIGHT_PURPLE + ParticleUtils.formatName(particle.getEffect().getName()),
+                            ChatColor.GRAY + "Style: " + ChatColor.LIGHT_PURPLE + ParticleUtils.formatName(particle.getStyle().getName()),
+                            ChatColor.AQUA + "Shift-click to delete."
                     },
                     (button, isShiftClick) -> {
                         if (!isShiftClick) {
@@ -75,12 +74,14 @@ public class GuiInventoryManageParticles extends GuiInventory {
 
         // Create New Particle Button
         boolean canCreate = pplayer.getActiveParticles().size() < PlayerParticles.getInstance().getManager(PermissionManager.class).getMaxParticlesAllowed(pplayer);
-        String lore = localeManager.getLocaleMessage("gui-color-info") + localeManager.getLocaleMessage("gui-create-particle-description");
         GuiActionButton createNewParticle = new GuiActionButton(
-                38,
+                INVENTORY_SIZE - 5,
                 GuiIcon.CREATE.get(),
-                localeManager.getLocaleMessage("gui-color-icon-name") + localeManager.getLocaleMessage("gui-create-particle"),
-                canCreate ? new String[]{lore} : new String[]{lore, localeManager.getLocaleMessage("gui-color-unavailable") + localeManager.getLocaleMessage("gui-create-particle-unavailable")},
+                ChatColor.translateAlternateColorCodes('&', "&a&lNew Particle"),
+                canCreate ? new String[]{} : new String[]{
+                        ChatColor.RED + "You've already used all",
+                        ChatColor.RED + "of your particle slots."
+                },
                 (button, isShiftClick) -> {
                     if (!canCreate) return;
                     ParticlePair editingParticle = ParticlePair.getNextDefault(pplayer);
@@ -109,10 +110,11 @@ public class GuiInventoryManageParticles extends GuiInventory {
         this.actionButtons.add(createNewParticle);
 
         // Reset Particles Button
-        GuiActionButton resetParticles = new GuiActionButton(42,
+        GuiActionButton resetParticles = new GuiActionButton(
+                INVENTORY_SIZE - 4,
                 GuiIcon.RESET.get(),
-                localeManager.getLocaleMessage("gui-color-icon-name") + localeManager.getLocaleMessage("gui-reset-particles"),
-                new String[]{localeManager.getLocaleMessage("gui-color-unavailable") + localeManager.getLocaleMessage("gui-reset-particles-description")},
+                ChatColor.translateAlternateColorCodes('&', "&c&lReset Particles"),
+                new String[]{},
                 (button, isShiftClick) -> {
                     // Reset particles
                     PlayerParticlesAPI.getInstance().savePlayerParticleGroup(pplayer.getPlayer(), ParticleGroup.getDefaultGroup());
@@ -124,9 +126,9 @@ public class GuiInventoryManageParticles extends GuiInventory {
 
         // Back Button
         GuiActionButton backButton = new GuiActionButton(
-                INVENTORY_SIZE - 1,
-                GuiIcon.BACK.get(),
-                localeManager.getLocaleMessage("gui-color-info") + localeManager.getLocaleMessage("gui-back-button"),
+                INVENTORY_SIZE - 6,
+                Material.PAPER,
+                ChatColor.translateAlternateColorCodes('&', "&b&lBack"),
                 new String[]{},
                 (button, isShiftClick) -> guiManager.transition(new GuiInventoryDefault(pplayer)));
         this.actionButtons.add(backButton);
