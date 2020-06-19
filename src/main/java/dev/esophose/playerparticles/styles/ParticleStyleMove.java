@@ -55,7 +55,7 @@ public class ParticleStyleMove extends DefaultParticleStyle implements Listener 
         this.multiplier = config.getInt("multiplier");
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    /*(@EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMove(PlayerMoveEvent event) {
         ParticleManager particleManager = PlayerParticles.getInstance().getManager(ParticleManager.class);
 
@@ -69,6 +69,5 @@ public class ParticleStyleMove extends DefaultParticleStyle implements Listener 
             loc.setY(loc.getY() + 0.05);
             particleManager.displayParticles(player, player.getWorld(), particle, DefaultStyles.MOVE.getParticles(particle, loc), false);
         }
-    }
-
+    }*/
 }

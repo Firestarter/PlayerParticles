@@ -80,13 +80,13 @@ public class ParticleStyleSwords extends DefaultParticleStyle implements Listene
             if (pplayer == null)
                 return;
 
-            if (NMSUtil.getVersionNumber() > 8) {
+            /*if (NMSUtil.getVersionNumber() > 8) {
                 if (!this.isSword(player.getInventory().getItemInMainHand()))
                     return;
             } else {
                 if (!this.isSword(player.getInventory().getItemInHand()))
                     return;
-            }
+            }*/
 
             for (ParticlePair particle : pplayer.getActiveParticlesForStyle(DefaultStyles.SWORDS)) {
                 Location loc = entity.getLocation().clone().add(0, 1, 0);
